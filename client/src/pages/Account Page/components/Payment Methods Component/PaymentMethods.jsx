@@ -1,20 +1,8 @@
-import React from "react";
-import {
-  Box,
-  Heading,
-  Text,
-  Button,
-  useDisclosure,
-  Center,
-  HStack,
-} from "@chakra-ui/react";
-import PaymentMethodCard from "./PaymentMethodCard";
+import { Box, Heading, Text, Center, HStack } from "@chakra-ui/react";
 import AddPaymentMethodModal from "./AddPaymentMethodModal";
 import { FaCcMastercard, FaCcVisa, FaPaypal } from "react-icons/fa";
 
 const PaymentMethods = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <Box w={"50%"} position={"center"} margin={"auto"} mt={100}>
       <Center>
@@ -29,13 +17,13 @@ const PaymentMethods = () => {
           </HStack>
         </Box>
 
-        <Text m={10}>
+        <Text m={1}>
           Manage your payment options. View and manage your existing payment
           methods, add new payment methods, and set a default payment method for
           future rides.
         </Text>
       </Center>
-      <AddPaymentMethodModal isOpen={isOpen} onClose={onClose} />
+      <AddPaymentMethodModal />
     </Box>
   );
 };

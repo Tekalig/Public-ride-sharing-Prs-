@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Box,
   Flex,
@@ -37,7 +38,7 @@ const DriverLoginPage = () => {
           body: JSON.stringify({ email, password }),
         });
         const data = await response.json();
-
+        localStorage.setItem("token_id", data.token_id); // Store token_id in localStorage
         if (response.ok) {
           // Handle login success
           console.log(data);
@@ -84,7 +85,9 @@ const DriverLoginPage = () => {
               placeholder="Enter your email"
               _placeholder={{ opacity: 1, color: "gray.500" }}
             />
-            {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+            {errors.email && (
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl isInvalid={!!errors.password}>
             <FormLabel color={"gray.500"} fontWeight={"bolder"}>
@@ -98,7 +101,9 @@ const DriverLoginPage = () => {
               placeholder="Enter your password"
               _placeholder={{ opacity: 1, color: "gray.500" }}
             />
-            {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
+            {errors.password && (
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            )}
           </FormControl>
 
           {errors.server && (

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Text,
@@ -7,10 +6,10 @@ import {
   Avatar,
   Center,
   Card,
+  Button,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { FaMailBulk, FaPhone } from "react-icons/fa";
-
-
 
 const Profile = () => {
   return (
@@ -47,6 +46,20 @@ const Profile = () => {
                   +1 (123) 456-7890
                 </Text>
               </Box>
+              <Button colorScheme="green" mt={10}>
+                Edit Profile
+              </Button>
+              <Link to={"/"}>
+                <Button
+                  colorScheme="red"
+                  mt={10}
+                  onClick={() => {
+                    localStorage.setItem("token_id", null);
+                  }}
+                >
+                  Login Out
+                </Button>
+              </Link>
             </VStack>
           </VStack>
         </Card>

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Box,
   Text,
@@ -7,22 +7,14 @@ import {
   FormControl,
   FormLabel,
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
 
-const AddPaymentMethodModal = ({ isOpen, onClose, onAddPaymentMethod }) => {
-  const [cardNumber, setCardNumber] = React.useState("");
-  const [expirationMonth, setExpirationMonth] = React.useState("");
-  const [expirationYear, setExpirationYear] = React.useState("");
-  const [cvc, setCVC] = React.useState("");
-
-  const handleSubmit = () => {
-    onAddPaymentMethod({ cardNumber, expirationMonth, expirationYear, cvc });
-    onClose();
-  };
+const AddPaymentMethodModal = () => {
+  const [cardNumber, setCardNumber] = useState("");
+  const [expirationMonth, setExpirationMonth] = useState("");
+  const [cvc, setCVC] = useState("");
 
   return (
     <Box mb={10}>
-      <Button onClick={onClose}>Close</Button>
       <Text fontSize="lg" fontWeight="bold">
         Add Payment Method
       </Text>
@@ -34,7 +26,12 @@ const AddPaymentMethodModal = ({ isOpen, onClose, onAddPaymentMethod }) => {
           onChange={(e) => setCardNumber(e.target.value)}
         />
       </FormControl>
-      <FormControl mt="4" display="flex" justifyContent="space-between">
+      <FormControl
+        mt="4"
+        display="flex"
+        justifyContent="space-between"
+        flexWrap={"wrap"}
+      >
         <Box>
           <FormLabel>Expiration Date</FormLabel>
           <Input
@@ -55,8 +52,7 @@ const AddPaymentMethodModal = ({ isOpen, onClose, onAddPaymentMethod }) => {
       <Button
         mt="4"
         colorScheme="blue"
-        onClick={handleSubmit}
-        isDisabled={!cardNumber || !expirationMonth || !expirationYear || !cvc}
+        isDisabled={!cardNumber || !expirationMonth || !cvc}
       >
         Add Payment Method
       </Button>
@@ -65,22 +61,22 @@ const AddPaymentMethodModal = ({ isOpen, onClose, onAddPaymentMethod }) => {
 };
 
 export default AddPaymentMethodModal;
-function PasswordInput() {
-  const [show, setShow] = React.useState(false)
-  const handleClick = () => setShow(!show)
+// function PasswordInput() {
+//   const [show, setShow] = useState(false)
+//   const handleClick = () => setShow(!show)
 
-  return (
-    <InputGroup size='md'>
-      <Input
-        pr='4.5rem'
-        type={show ? 'text' : 'password'}
-        placeholder='Enter password'
-      />
-      <InputRightElement width='4.5rem'>
-        <Button h='1.75rem' size='sm' onClick={handleClick}>
-          {show ? 'Hide' : 'Show'}
-        </Button>
-      </InputRightElement>
-    </InputGroup>
-  )
-}
+//   return (
+//     <InputGroup size='md'>
+//       <Input
+//         pr='4.5rem'
+//         type={show ? 'text' : 'password'}
+//         placeholder='Enter password'
+//       />
+//       <InputRightElement width='4.5rem'>
+//         <Button h='1.75rem' size='sm' onClick={handleClick}>
+//           {show ? 'Hide' : 'Show'}
+//         </Button>
+//       </InputRightElement>
+//     </InputGroup>
+//   )
+// }

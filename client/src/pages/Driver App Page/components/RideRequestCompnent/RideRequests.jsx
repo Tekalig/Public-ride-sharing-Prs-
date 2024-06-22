@@ -44,7 +44,7 @@ const RideRequests = () => {
 
   const handleStatus = async (requestId, status) => {
     try {
-      await fetch(
+      const response = await fetch(
         "http://localhost:8081/ride-requests-deletes",
         {
           method: "DELETE",
@@ -142,7 +142,6 @@ const RideRequests = () => {
               <option value="4">4</option>
               <option value="5">5</option>
             </Select>
-
 
             <Select
               value={filters.d_address}

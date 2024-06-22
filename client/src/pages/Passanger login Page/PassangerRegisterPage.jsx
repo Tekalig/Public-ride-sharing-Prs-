@@ -11,10 +11,10 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import Topbar from "../HomePage/components/TopbarComponent/Topbar";
 import Footer from "../HomePage/components/FooterComponent/Footer";
-import { useNavigate,Link as ReactRouterLink} from "react-router-dom";
+import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
 
 function PassangerRegisterPage() {
   const [name, setName] = useState("");
@@ -36,22 +36,32 @@ function PassangerRegisterPage() {
     if (!name) errors.name = "Name is required";
     if (!email) errors.email = "Email is required";
     if (!password) errors.password = "Password is required";
-    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+    if (password !== confirmPassword)
+      errors.confirmPassword = "Passwords do not match";
     if (!phoneNumber) errors.phoneNumber = "Phone number is required";
 
     setError(errors);
 
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await fetch("http://localhost:8081/PassangerRegisterPage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password, confirmPassword, phoneNumber }),
-        });
+        const response = await fetch(
+          "http://localhost:8081/PassengerRegisterPage",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name,
+              email,
+              password,
+              confirmPassword,
+              phoneNumber,
+            }),
+          }
+        );
         const data = await response.json();
         // Handle registration success
-        console.log(data);
-        navigate("/account"); // Navigate to account page on success
+        localStorage.setItem("token_id", data.token_id);
+        navigate("/ride-request"); // Navigate to account page on success
       } catch (error) {
         setError({ server: error.message });
       }
@@ -175,10 +185,10 @@ function PassangerRegisterPage() {
           </form>
           <Text mt={4} fontSize="sm" color="gray.600">
             Already Have an account?{" "}
-          <ReactRouterLink to={"/passanger-login"} color="teal.500">
-            Login
-          </ReactRouterLink>
-        </Text>
+            <ReactRouterLink to={"/passanger-login"} color="teal.500">
+              Login
+            </ReactRouterLink>
+          </Text>
         </Box>
       </Box>
 

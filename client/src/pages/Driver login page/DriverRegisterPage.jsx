@@ -13,11 +13,10 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import Topbar from "../HomePage/components/TopbarComponent/Topbar";
 import Footer from "../HomePage/components/FooterComponent/Footer";
-import { FaEye } from "react-icons/fa";
-import {useNavigate,Link as ReactRouterLink } from "react-router-dom";
+import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
 
 function DriverRegisterPage() {
   const [name, setName] = useState("");
@@ -37,7 +36,6 @@ function DriverRegisterPage() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -75,16 +73,16 @@ function DriverRegisterPage() {
               carYear,
               numberOfSite,
               preferences: {
-                smoking: smoking ? 'yes' : 'no',
-                music: music ? 'yes' : 'no',
-                pet_friendly: petFriendly ? 'yes' : 'no',
+                smoking: smoking ? "Yes" : "No",
+                music: music ? "Yes" : "No",
+                pet_friendly: petFriendly ? "Yes" : "No",
               },
             }),
           }
         );
         const data = await response.json();
         // Handle registration success
-        console.log(data);
+        localStorage.setItem("token_id", data.token_id); // Store token_id in localStorage
         navigate("/driver"); // Navigate to driver page on success
       } catch (error) {
         setErrors({ api: error.message });

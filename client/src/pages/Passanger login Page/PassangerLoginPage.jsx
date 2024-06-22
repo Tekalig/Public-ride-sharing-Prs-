@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Box,
   Flex,
@@ -31,22 +32,24 @@ const PassangerLoginPage = () => {
     if (Object.keys(errors).length === 0) {
       // Call API to login passenger
       try {
-        const response = await fetch("http://localhost:8081/PassangerLoginPage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
+        const response = await fetch(
+          "http://localhost:8081/PassengerLoginPage",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          }
+        );
         if (!response.ok) {
           const errorData = await response.json();
           setErrors({ server: errorData.message });
         } else {
           const data = await response.json();
           // Handle login success
-          console.log(data);
+          localStorage.setItem("token_id", data.token_id); // Store token_id in localStorage
           navigate("/ride-request"); // Redirect to ride request page
         }
-      }
-        catch (error) {
+      } catch (error) {
         setErrors({ server: error.message });
       }
     }
@@ -84,7 +87,9 @@ const PassangerLoginPage = () => {
               placeholder="Enter your email"
               _placeholder={{ opacity: 1, color: "gray.500" }}
             />
-            {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+            {errors.email && (
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl isInvalid={!!errors.password}>
             <FormLabel color={"gray.500"} fontWeight={"bolder"}>
@@ -98,7 +103,9 @@ const PassangerLoginPage = () => {
               placeholder="Enter your password"
               _placeholder={{ opacity: 1, color: "gray.500" }}
             />
-            {errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
+            {errors.password && (
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            )}
           </FormControl>
           {errors.server && (
             <Box color="red.500" mt={2}>
