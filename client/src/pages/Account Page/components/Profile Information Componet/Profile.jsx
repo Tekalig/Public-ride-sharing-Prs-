@@ -54,7 +54,7 @@ const Profile = () => {
                   colorScheme="red"
                   mt={10}
                   onClick={() => {
-                    localStorage.setItem("token_id", null);
+                    localStorage.removeItem("token_id");
                   }}
                 >
                   Login Out

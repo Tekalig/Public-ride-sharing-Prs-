@@ -27,7 +27,7 @@ app.post("/PassengerRegisterPage", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const sql =
-      "INSERT INTO users (name, email, password, phone_Number) VALUES (?, ?, ?, ?)";
+      "INSERT INTO users (user_name, email, password, phone_Number) VALUES (?, ?, ?, ?)";
     const values = [
       req.body.name,
       req.body.email,
@@ -91,7 +91,7 @@ app.post("/DriverRegisterPage", async (req, res) => {
 
     // Insert into drivers table
     const sqlDrivers =
-      "INSERT INTO drivers (name, email, password, driver_license) VALUES (?, ?, ?, ?)";
+      "INSERT INTO drivers (driver_name, email, password, driver_license) VALUES (?, ?, ?, ?)";
     const driverValues = [name, email, hashedPassword, driver_license];
 
     db.query(sqlDrivers, driverValues, (err, result) => {
@@ -174,7 +174,7 @@ app.post("/DriverLoginPage", (req, res) => {
 // Endpoint to fetch ride requests
 app.get("/ride-request", (req, res) => {
   const query =
-    "SELECT rr.user_id AS id, u.name AS passangerName, rr.s_address, rr.d_address, rr.numberOfSite FROM riderequest rr JOIN users u ON rr.user_id = u.user_id;";
+    "SELECT rr.user_id AS id, u.user_name AS passangerName, rr.s_address, rr.d_address, rr.numberOfSite FROM riderequest rr JOIN users u ON rr.user_id = u.user_id;";
   db.query(query, (error, results) => {
     if (error) {
       return res.status(500).json({ error: "Database query error" });
@@ -186,7 +186,7 @@ app.get("/ride-request", (req, res) => {
 // Ride history
 app.get("/ride-history", (req, res) => {
   const query =
-    "SELECT rh.ride_id, rh.s_address, rh.d_address, u.name, ci.car_model AS car, p.amount AS fare, p.pay_method AS paymentMethod, rh.status, rh.travel_date FROM ridehistory rh INNER JOIN Users u ON rh.user_id = u.user_id INNER JOIN carinfo ci ON rh.driver_id = ci.driver_id INNER JOIN payment p ON rh.ride_id = p.ride_id;";
+    "SELECT rh.ride_id, rh.s_address, rh.d_address, u.user_name, ci.car_model AS car, p.amount AS fare, p.pay_method AS paymentMethod, rh.status, rh.travel_date FROM ridehistory rh INNER JOIN users u ON rh.user_id = u.user_id INNER JOIN carinfo ci ON rh.driver_id = ci.driver_id INNER JOIN payment p ON rh.ride_id = p.ride_id;";
   db.query(query, (error, results) => {
     if (error) {
       return res.status(500).json({ error: "Database query error" });
@@ -228,16 +228,18 @@ app.post("/createRideRequest", (req, res) => {
 
 // Decline accept ride requests
 app.delete("/ride-requests-deletes", async (req, res) => {
-  const id = req.body.requestId;
+  const user_id = req.body.requestId;
   const status = req.body.status;
+  const driver_id = req.body.driver_id;
   const deleteQuery = "DELETE FROM riderequest WHERE user_id = ?";
-  const updateQuery = "UPDATE ridehistory SET status = ? WHERE user_id = ?";
+  const updateQuery =
+    "UPDATE ridehistory SET status = ?, driver_id = ? WHERE user_id = ?";
 
-  db.query(deleteQuery, [id], (error) => {
+  db.query(deleteQuery, [user_id], (error) => {
     if (error) {
       return res.status(500).json({ error: "Database query error" });
     }
-    db.query(updateQuery, [status, id], (error) => {
+    db.query(updateQuery, [status, driver_id, user_id], (error) => {
       if (error) {
         return res.status(500).json({ error: "Database query error" });
       }

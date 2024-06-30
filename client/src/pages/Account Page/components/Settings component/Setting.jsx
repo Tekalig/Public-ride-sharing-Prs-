@@ -47,14 +47,7 @@ const Setting = () => {
   };
 
   return (
-    <Box
-      p={14}
-      bg="black.200"
-      border={"ridge"}
-      borderRadius="lg"
-      boxShadow="md"
-      text
-    >
+    <Box p={14} bg="black.200" boxShadow="md" text>
       <Heading as="h2" size="lg" mb={4}>
         Settings
       </Heading>

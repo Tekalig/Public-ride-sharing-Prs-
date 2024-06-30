@@ -3,29 +3,26 @@
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  background-color: #c89e11;
+  background-color: #f9c61d;
   padding: 10px;
 }
 
 .topLeft {
   display: flex;
-}
-
-.topIcon {
-  margin-right: 10px;
-  font-size: 24px;
+  justify-content: space-between;
+  margin: 0 10px;
 }
 
 .topCenter {
   flex: 1;
   text-align: center;
+  margin: 0 10px;
 }
 
 .topList {
   display: flex;
   justify-content: space-between;
   list-style: none;
-  padding: 10px;
 }
 
 .topListItem {
@@ -33,11 +30,6 @@
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-}
-
-.topRight {
-  display: flex;
-  align-items: center;
 }
 
 .topImage {
@@ -49,11 +41,6 @@
   margin-left: 30px;
 }
 
-.topSearchIcon {
-  font-size: 20px;
-  cursor: pointer;
-  padding: 10px;
-}
 .topbarContainer {
   width: 100%;
 }

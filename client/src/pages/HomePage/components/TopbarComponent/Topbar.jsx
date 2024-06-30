@@ -1,10 +1,10 @@
-import { Button, Text, useColorMode } from "@chakra-ui/react";
+import { Text, useColorMode } from "@chakra-ui/react";
 import "./topbar.css";
-import { FaHome, FaInfoCircle } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function Topbar() {
-  const { toggleColorMode } = useColorMode("dark");
+  const { colorMode, toggleColorMode } = useColorMode("dark");
   return (
     <div className="topbarContainer">
       <div className="top">
@@ -25,17 +25,19 @@ function Topbar() {
             </li>
           </ul>
         </div>
-        <div className="topRight">
-          <Button onClick={toggleColorMode} color={"black"}>
-            color mode
-          </Button>
-          <Link to={"/account"}>
-            <img
-              className="topImage"
-              src="https://images.pexels.com/photos/415829/"
-              alt=""
-            />
-          </Link>
+        <div className="topLeft">
+          <button onClick={toggleColorMode}>
+            {colorMode == "dark" ? <FaSun /> : <FaMoon />}
+          </button>
+          {localStorage.token_id && (
+            <Link to={"/account"}>
+              <img
+                className="topImage"
+                src="https://images.pexels.com/photos/415829/"
+                alt=""
+              />
+            </Link>
+          )}
         </div>
       </div>
     </div>

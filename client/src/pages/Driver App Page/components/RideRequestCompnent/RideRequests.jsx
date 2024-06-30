@@ -51,7 +51,11 @@ const RideRequests = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ requestId: requestId, status: status }),
+          body: JSON.stringify({
+            requestId: requestId,
+            status: status,
+            driver_id: localStorage.getItem("token_id"),
+          }),
         }
       );
 

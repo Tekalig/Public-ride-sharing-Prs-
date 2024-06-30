@@ -4,7 +4,6 @@ import {
   Heading,
   Text,
   Switch,
-  Button,
   Card,
   Image,
   Stack,
@@ -23,9 +22,12 @@ const Dashboard = () => {
     weekly: "$500.00",
   };
   const [isOnline, setIsOnline] = useState(true);
-
+  const [color, setColor] = useState("");
   const handleToggleOnlineStatus = () => {
     setIsOnline(!isOnline);
+  };
+  const colorChange = () => {
+    color ? setColor("") : setColor("yellow");
   };
 
   return (
@@ -101,16 +103,13 @@ const Dashboard = () => {
                 </CardBody>
 
                 <CardFooter>
-                  <Button variant="solid" colorScheme="blue">
-                    <HStack>
-                      <FaStar />
-                      <FaStar />
-                      <FaStar />
-                      <FaStar />
-                      <FaStar />
-                      <FaStar />
-                    </HStack>
-                  </Button>
+                  <HStack>
+                    <FaStar fill={color} onClick={colorChange} />
+                    <FaStar fill={color} onClick={colorChange} />
+                    <FaStar fill={color} onClick={colorChange} />
+                    <FaStar fill={color} onClick={colorChange} />
+                    <FaStar fill={color} onClick={colorChange} />
+                  </HStack>
                 </CardFooter>
               </Stack>
             </Card>
