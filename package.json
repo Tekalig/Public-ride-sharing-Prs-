@@ -1,0 +1,18 @@
+{
+  "name": "ridesharingapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "install-client": "npm install --prefix client",
+    "install-server": "npm install --prefix server",
+    "install": "npm run install-client && npm run install-server",
+    "server": "npm start --prefix server",
+    "client": "npm start --prefix client",
+    "watch" : "npm run server & npm run client",
+    "test": "npm run test --prefix server && npm run test --prefix client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
