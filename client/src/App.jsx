@@ -4,10 +4,10 @@ import Account from "./pages/Account Page/components/Account";
 import Driver from "./pages/Driver App Page/components/Driver";
 import RideRequest from "./pages/Ride Request Page/components/RideRequest";
 import About from "./pages/About us Page/components/About";
-import DriverLoginPage from "./pages/Driver login page/DriverLoginPage";
-import DriverRegisterPage from "./pages/Driver login page/DriverRegisterPage";
-import PassangerRegisterPage from "./pages/Passanger login Page/PassangerRegisterPage";
-import PassangerLoginPage from "./pages/Passanger login Page/PassangerLoginPage";
+import DriverLogin from "./pages/Driver/Auth/Login";
+import DriverRegister from "./pages/Driver/Auth/SignUp";
+import PassangerRegister from "./pages/Passenger/Auth/SignUp";
+import PassangerLogin from "./pages/Passenger/Auth/Login";
 
 function App() {
   return (
@@ -19,13 +19,13 @@ function App() {
           <Route path="/driver" element={<Driver />} />
           <Route path="/ride-request" element={<RideRequest />} />
           <Route path="/about" element={<About />} />
-          <Route path="/driver-login" element={<DriverLoginPage />} />
-          <Route path="/driver-register" element={<DriverRegisterPage />} />
+          <Route path="/driver-login" element={<DriverLogin />} />
+          <Route path="/driver-register" element={<DriverRegister />} />
           <Route
             path="/passanger-register"
-            element={<PassangerRegisterPage />}
+            element={<PassangerRegister />}
           />
-          <Route path="/passanger-login" element={<PassangerLoginPage />} />
+          <Route path="/passanger-login" element={<PassangerLogin />} />
         </Routes>
       </Router>
     </div>
