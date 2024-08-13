@@ -11,9 +11,9 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import Topbar from "../HomePage/components/TopbarComponent/Topbar";
+import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../HomePage/components/FooterComponent/Footer"; // Assuming you have a Footer component
+import Footer from "../../HomePage/components/FooterComponent/Footer"; // Assuming you have a Footer component
 
 const DriverLoginPage = () => {
   const [email, setEmail] = useState("");

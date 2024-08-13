@@ -6,7 +6,6 @@ import {
   Text,
   Button,
   Select,
-  Checkbox,
   VStack,
   HStack,
   Badge,
@@ -34,9 +33,6 @@ const RideListing = () => {
     d_address: "",
     no_site: "",
     car_model: "",
-    smooking: "No",
-    music: "No",
-    pet: "No",
   });
 
   const [rideListings, setRideListings] = useState([]);
@@ -63,10 +59,6 @@ const RideListing = () => {
     if (filters.d_address && ride.d_address !== filters.d_address) return false;
     if (filters.no_site && ride.no_site < filters.no_site) return false;
     if (filters.car_model && ride.car_model !== filters.car_model) return false;
-    if (filters.smooking !== "No" && ride.smoking !== filters.smooking)
-      return false;
-    if (filters.music !== "No" && ride.music !== filters.music) return false;
-    if (filters.pet !== "No" && ride.pet_friendly !== filters.pet) return false;
     return true;
   });
 
@@ -74,7 +66,7 @@ const RideListing = () => {
 
   return (
     <>
-      <Box w={"70%"} ml={"25%"} p={20}>
+      <Box w={"70%"} mx={"auto"} p={20}>
         <Box>
           <FormControl mb={4}>
             <FormLabel htmlFor="origin">Origin</FormLabel>
@@ -84,9 +76,8 @@ const RideListing = () => {
                 id="origin"
                 type="text"
                 placeholder="Enter origin address"
-                mr={6}
-                flexGrow={1}
-                ml={6}
+                mr={2}
+                ml={5}
               />
             </Box>
           </FormControl>
@@ -161,41 +152,6 @@ const RideListing = () => {
               <option value="Honda Accord">Honda Accord</option>
               <option value="Ford Focus">Ford Focus</option>
             </Select>
-            <HStack spacing={8}>
-              <Checkbox
-                value={filters.smooking === "Yes" ? "Yes" : "No"}
-                onChange={(e) =>
-                  handleFilterChange(
-                    "smooking",
-                    e.target.value === "Yes" ? "No" : "Yes"
-                  )
-                }
-              >
-                Smoking
-              </Checkbox>
-              <Checkbox
-                value={filters.music === "Yes" ? "Yes" : "No"}
-                onChange={(e) =>
-                  handleFilterChange(
-                    "music",
-                    e.target.value === "Yes" ? "No" : "Yes"
-                  )
-                }
-              >
-                Music
-              </Checkbox>
-              <Checkbox
-                value={filters.pet === "Yes" ? "Yes" : "No"}
-                onChange={(e) =>
-                  handleFilterChange(
-                    "pet",
-                    e.target.value === "Yes" ? "No" : "Yes"
-                  )
-                }
-              >
-                Pet-friendly
-              </Checkbox>
-            </HStack>
           </HStack>
         </VStack>
 

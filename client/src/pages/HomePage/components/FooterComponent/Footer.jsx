@@ -1,17 +1,11 @@
 import "./footer.css";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaTwitter,
-  FaPhoneAlt,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaInstagram, FaTwitter, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 function Footer() {
   return (
     <footer className="footerContainer">
       <div className="container">
-        <div>
+        <>
           <div>
             <h2 className="title-font">SERVICES</h2>
             <nav>
@@ -29,8 +23,8 @@ function Footer() {
               </li>
             </nav>
           </div>
-        </div>
-        <div>
+        </>
+        <>
           <div>
             <h2>COMPANY</h2>
             <nav>
@@ -48,8 +42,8 @@ function Footer() {
               </li>
             </nav>
           </div>
-        </div>
-        <div>
+        </>
+        <>
           <div>
             <h2>LEGAL</h2>
             <nav>
@@ -67,9 +61,9 @@ function Footer() {
               </li>
             </nav>
           </div>
-        </div>
-        <div>
-          <div className="contactContainer">
+        </>
+        <>
+          <div className="social-links">
             <h2>CONTACT</h2>
             <nav>
               <li>
@@ -98,29 +92,12 @@ function Footer() {
                   <FaInstagram /> @YourInstagram
                 </a>
               </li>
-              <li>
-                <a
-                  href="https://facebook.com/yourfacebook"
-                  className="contactLink"
-                >
-                  <FaFacebookF /> @YourFacebook
-                </a>
-              </li>
             </nav>
           </div>
-        </div>
+        </>
       </div>
-      <div className="container">
-        <p>
-          © 2023 Ride Sharing App —
-          <a
-            href="https://www.linkedin.com/in/your-linkedin-profile/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            @Besu
-          </a>
-        </p>
+      <div className="copyright">
+        <p>© 2023 Ride Sharing App — @Besu</p>
       </div>
     </footer>
   );

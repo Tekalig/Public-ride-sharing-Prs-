@@ -12,33 +12,44 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import Topbar from "../HomePage/components/TopbarComponent/Topbar";
-import Footer from "../HomePage/components/FooterComponent/Footer";
+import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
+import Footer from "../../HomePage/components/FooterComponent/Footer";
 import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
 
 function PassangerRegisterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [filters, setFilters] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
+  });
   const [error, setError] = useState({});
   const [show, setShow] = useState(false);
 
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
 
+  function handleChange(filter, value) {
+    setFilters((preValue) => {
+      return {
+        ...preValue,
+        [filter]: value,
+      };
+    });
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Form validation (dummy example)
     let errors = {};
-    if (!name) errors.name = "Name is required";
-    if (!email) errors.email = "Email is required";
-    if (!password) errors.password = "Password is required";
-    if (password !== confirmPassword)
+    if (!filters.name) errors.name = "Name is required";
+    if (!filters.email) errors.email = "Email is required";
+    if (!filters.password) errors.password = "Password is required";
+    if (filters.password !== filters.confirmPassword)
       errors.confirmPassword = "Passwords do not match";
-    if (!phoneNumber) errors.phoneNumber = "Phone number is required";
+    if (!filters.phoneNumber) errors.phoneNumber = "Phone number is required";
 
     setError(errors);
 
@@ -49,13 +60,7 @@ function PassangerRegisterPage() {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name,
-              email,
-              password,
-              confirmPassword,
-              phoneNumber,
-            }),
+            body: JSON.stringify(filters),
           }
         );
         const data = await response.json();
@@ -99,8 +104,11 @@ function PassangerRegisterPage() {
               <Input
                 color={"blue.200"}
                 type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                name="name"
+                value={filters.name}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your name"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
@@ -113,8 +121,11 @@ function PassangerRegisterPage() {
               <Input
                 color={"blue.200"}
                 type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                name="email"
+                value={filters.email}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your email"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
@@ -128,8 +139,11 @@ function PassangerRegisterPage() {
                 <Input
                   color={"blue.200"}
                   type={show ? "text" : "password"}
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  name="password"
+                  value={filters.password}
+                  onChange={(event) =>
+                    handleChange(event.target.name, event.target.value)
+                  }
                   placeholder="Enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
@@ -149,8 +163,11 @@ function PassangerRegisterPage() {
                 <Input
                   color={"blue.200"}
                   type={show ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  name="confirmPassword"
+                  value={filters.confirmPassword}
+                  onChange={(event) =>
+                    handleChange(event.target.name, event.target.value)
+                  }
                   placeholder="Re-Enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
@@ -169,8 +186,11 @@ function PassangerRegisterPage() {
               <Input
                 color={"blue.200"}
                 type="tel"
-                value={phoneNumber}
-                onChange={(event) => setPhoneNumber(event.target.value)}
+                name="phoneNumber"
+                value={filters.phoneNumber}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your phone number"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />

@@ -66,10 +66,10 @@ app.post("/PassengerLoginPage", (req, res) => {
           .status(200)
           .json({ message: "Login successful", token_id: user.user_id });
       } else {
-        return res.status(401).json({ message: "Invalid email or password" });
+        return res.status(401).json({ message: "Invalid password" });
       }
     } else {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Invalid email" });
     }
   });
 });
@@ -86,7 +86,6 @@ app.post("/DriverRegisterPage", async (req, res) => {
       car_model,
       carYear,
       numberOfSite,
-      preferences,
     } = req.body;
 
     // Insert into drivers table
@@ -117,25 +116,10 @@ app.post("/DriverRegisterPage", async (req, res) => {
           console.error("Error inserting into carinfo table:", err);
           return res.status(500).json("Database error");
         }
-        // Insert into preferences table
-        const sqlPreferences =
-          "INSERT INTO preference (driver_id, smoking, music, pet_friendly) VALUES (?, ?, ?, ?)";
-        const preferencesValues = [
-          driver_id,
-          preferences.smoking,
-          preferences.music,
-          preferences.pet_friendly,
-        ];
 
-        db.query(sqlPreferences, preferencesValues, (err, result) => {
-          if (err) {
-            console.error("Error inserting into preferences table:", err);
-            return res.status(500).json("Database error");
-          }
-          return res.status(200).json({
-            message: "Driver registered successfully",
-            token_id: driver_id,
-          });
+        return res.status(200).json({
+          message: "Driver registered successfully",
+          token_id: driver_id,
         });
       });
     });
@@ -198,7 +182,7 @@ app.get("/ride-history", (req, res) => {
 // Ride listings
 app.get("/ride-listings", (req, res) => {
   const query =
-    "SELECT rr.user_id AS id, u.name AS passangerName, rr.s_address, rr.d_address, rr.numberOfSite FROM riderequest rr JOIN users u ON rr.user_id = u.user_id;";
+    "SELECT rr.user_id AS id, u.user_name AS passangerName, rr.s_address, rr.d_address, rr.numberOfSite FROM riderequest rr JOIN users u ON rr.user_id = u.user_id;";
   db.query(query, (error, results) => {
     if (error) {
       return res.status(500).json({ error: "Database query error" });

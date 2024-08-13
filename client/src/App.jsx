@@ -8,10 +8,11 @@ import DriverLogin from "./pages/Driver/Auth/Login";
 import DriverRegister from "./pages/Driver/Auth/SignUp";
 import PassangerRegister from "./pages/Passenger/Auth/SignUp";
 import PassangerLogin from "./pages/Passenger/Auth/Login";
+import "./App.css";
 
 function App() {
   return (
-    <div className="appContainer">
+    <>
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -21,14 +22,11 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/driver-login" element={<DriverLogin />} />
           <Route path="/driver-register" element={<DriverRegister />} />
-          <Route
-            path="/passanger-register"
-            element={<PassangerRegister />}
-          />
+          <Route path="/passanger-register" element={<PassangerRegister />} />
           <Route path="/passanger-login" element={<PassangerLogin />} />
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 

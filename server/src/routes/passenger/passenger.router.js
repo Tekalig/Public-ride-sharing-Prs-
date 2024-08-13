@@ -1,9 +1,8 @@
 const express = require("express");
-const {postPassenger} = require("./passenger.controller")
+const { passengerLogin, passengerRegister } = require("./passenger.controller");
 
 const passengerRouter = express.Router();
-passengerRouter.post("passengerLoginPage", postPassenger);
+passengerRouter.post("/login", passengerLogin);
+passengerRouter.post("/register", passengerRegister);
 
-module.exports = {
-    passengerRouter,
-}
+module.exports = passengerRouter;

@@ -1,57 +1,65 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Text,
-  HStack,
   Heading,
   Input,
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import Topbar from "../HomePage/components/TopbarComponent/Topbar";
-import Footer from "../HomePage/components/FooterComponent/Footer";
+import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
+import Footer from "../../HomePage/components/FooterComponent/Footer";
 import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
 
 function DriverRegisterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [driver_license, setdriver_license] = useState("");
-  const [license_plate, setlicense_plate] = useState("");
-  const [car_model, setcar_model] = useState("");
-  const [carYear, setCarYear] = useState("");
-  const [numberOfSite, setnumberOfSite] = useState("");
-  const [smoking, setSmoking] = useState(false);
-  const [music, setMusic] = useState(false);
-  const [petFriendly, setPetFriendly] = useState(false);
+  const [filters, setFilters] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    driver_license: "",
+    license_plate: "",
+    car_model: "",
+    carYear: "",
+    numberOfSite: "",
+  });
   const [errors, setErrors] = useState({});
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
 
+  function handleChange(filter, value) {
+    setFilters((preValue) => {
+      return {
+        ...preValue,
+        [filter]: value,
+      };
+    });
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     let newErrors = {};
-    if (!name) newErrors.name = "Name is required";
-    if (!email) newErrors.email = "Email is required";
-    if (!password) newErrors.password = "Password is required";
-    if (password !== confirmPassword)
+    if (!filters.name) newErrors.name = "Name is required";
+    if (!filters.email) newErrors.email = "Email is required";
+    if (!filters.password) newErrors.password = "Password is required";
+    if (filters.password !== filters.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
-    if (!driver_license)
+    if (!filters.driver_license)
       newErrors.driverLicense = "Driver License Number is required";
-    if (!license_plate) newErrors.licensePlate = "License Plate is required";
-    if (!car_model) newErrors.carModel = "Car Model is required";
-    if (!carYear) newErrors.carYear = "Car Year is required";
-    if (!numberOfSite) newErrors.numberOfSite = "Number of Sites is required";
+    if (!filters.license_plate)
+      newErrors.licensePlate = "License Plate is required";
+    if (!filters.car_model) newErrors.carModel = "Car Model is required";
+    if (!filters.carYear) newErrors.carYear = "Car Year is required";
+    if (!filters.numberOfSite)
+      newErrors.numberOfSite = "Number of Sites is required";
 
     setErrors(newErrors);
 
@@ -63,21 +71,7 @@ function DriverRegisterPage() {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name,
-              email,
-              password,
-              driver_license,
-              license_plate,
-              car_model,
-              carYear,
-              numberOfSite,
-              preferences: {
-                smoking: smoking ? "Yes" : "No",
-                music: music ? "Yes" : "No",
-                pet_friendly: petFriendly ? "Yes" : "No",
-              },
-            }),
+            body: JSON.stringify(filters),
           }
         );
         const data = await response.json();
@@ -109,49 +103,58 @@ function DriverRegisterPage() {
           marginTop={50}
         >
           <Flex justify="center" mb={4}>
-            <Heading as="h1" size="lg" color="gray.600">
+            <Heading as="h1" size="lg" color="black">
               Driver Register
             </Heading>
           </Flex>
           <form onSubmit={handleSubmit}>
             <FormControl isInvalid={errors.name}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Name
               </FormLabel>
               <Input
                 color={"blue.200"}
                 type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                name="name"
+                value={filters.name}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your name"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.name}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.email}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Email
               </FormLabel>
               <Input
                 color={"blue.200"}
+                name="email"
                 type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={filters.email}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your email"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.email}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.password}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Password
               </FormLabel>
               <InputGroup size="md">
                 <Input
                   color={"blue.200"}
+                  name="password"
                   type={show ? "text" : "password"}
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  value={filters.password}
+                  onChange={(event) =>
+                    handleChange(event.target.name, event.target.value)
+                  }
                   placeholder="Enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
@@ -164,15 +167,18 @@ function DriverRegisterPage() {
               <FormErrorMessage>{errors.password}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.confirmPassword}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Confirm Your Password
               </FormLabel>
               <InputGroup size="md">
                 <Input
                   color={"blue.200"}
+                  name="confirmPassword"
                   type={show ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  value={filters.confirmPassword}
+                  onChange={(event) =>
+                    handleChange(event.target.name, event.target.value)
+                  }
                   placeholder="Re-enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
@@ -185,91 +191,85 @@ function DriverRegisterPage() {
               <FormErrorMessage>{errors.confirmPassword}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.driver_license}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Your Driver License Number
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={driver_license}
-                onChange={(event) => setdriver_license(event.target.value)}
+                name="driver_license"
+                value={filters.driver_license}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your driver license number"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.driverLicense}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.license_plate}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 License Plate
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={license_plate}
-                onChange={(event) => setlicense_plate(event.target.value)}
+                name="license_plate"
+                value={filters.license_plate}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your license plate"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.licensePlate}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.car_model}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Car Model
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={car_model}
-                onChange={(event) => setcar_model(event.target.value)}
+                name="car_model"
+                value={filters.car_model}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your car model"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.car_model}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.numberOfSite}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Number of Sites
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={numberOfSite}
-                onChange={(event) => setnumberOfSite(event.target.value)}
+                name="numberOfSite"
+                value={filters.numberOfSite}
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter number of sites"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.numberOfSite}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.carYear}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+              <FormLabel color={"black"} fontWeight={"bolder"}>
                 Car Year
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={carYear}
-                onChange={(event) => setCarYear(event.target.value)}
+                value={filters.carYear}
+                name="carYear"
+                onChange={(event) =>
+                  handleChange(event.target.name, event.target.value)
+                }
                 placeholder="Enter your car year"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.carYear}</FormErrorMessage>
             </FormControl>
-
-            <HStack spacing={8}>
-              <Checkbox
-                isChecked={smoking}
-                onChange={(e) => setSmoking(e.target.checked)}
-              >
-                Non-smoking
-              </Checkbox>
-              <Checkbox
-                isChecked={music}
-                onChange={(e) => setMusic(e.target.checked)}
-              >
-                No music
-              </Checkbox>
-              <Checkbox
-                isChecked={petFriendly}
-                onChange={(e) => setPetFriendly(e.target.checked)}
-              >
-                Pet-friendly
-              </Checkbox>
-            </HStack>
 
             <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
               Sign Up
