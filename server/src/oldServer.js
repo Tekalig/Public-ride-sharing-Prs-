@@ -4,7 +4,11 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
 
 const db = mysql.createConnection({
@@ -229,6 +233,18 @@ app.delete("/ride-requests-deletes", async (req, res) => {
       }
       res.json("Delete is successful");
     });
+  });
+});
+
+// get all user
+app.get("/user/:id", async (req, res) => {
+  const getQuery = "select * from users where user_id = ?";
+  const id = Number(req.params.id);
+  await db.query(getQuery, id, (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: "Database query error" });
+    }
+    return res.status(200).json(data);
   });
 });
 
