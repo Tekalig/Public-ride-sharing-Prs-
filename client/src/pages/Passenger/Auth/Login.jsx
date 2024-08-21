@@ -10,16 +10,18 @@ import {
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
+import { useContext, useState } from "react";
+import Topbar from "../../HomePage/TopbarComponent/Topbar";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../../HomePage/components/FooterComponent/Footer";
+import Footer from "../../HomePage/FooterComponent/Footer";
+import ActContext from "../../../context/actContext";
 
 const PassangerLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const ctx = useContext(ActContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,7 +48,9 @@ const PassangerLoginPage = () => {
         } else {
           const data = await response.json();
           // Handle login success
-          localStorage.setItem("token_id", data.token_id); // Store token_id in localStorage
+
+          ctx.setTokenId(data.token_id); // Store token_id in localStorage
+          ctx.handleLogin();
           navigate("/ride-request"); // Redirect to ride request page
         }
       } catch (error) {

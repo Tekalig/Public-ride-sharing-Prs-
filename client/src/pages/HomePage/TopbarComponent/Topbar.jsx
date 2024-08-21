@@ -2,9 +2,12 @@ import { Text, useColorMode } from "@chakra-ui/react";
 import "./topbar.css";
 import { FaHome, FaInfoCircle, FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import ActContext from "../../../context/actContext";
 
 function Topbar() {
   const { colorMode, toggleColorMode } = useColorMode("dark");
+  const ctx = useContext(ActContext);
   return (
     <div className="topbarContainer">
       <div className="top">
@@ -29,7 +32,7 @@ function Topbar() {
           <button onClick={toggleColorMode}>
             {colorMode == "dark" ? <FaSun /> : <FaMoon />}
           </button>
-          {localStorage.token_id && (
+          {ctx.isLogin && (
             <Link to={"/account"}>
               <img
                 className="topImage"

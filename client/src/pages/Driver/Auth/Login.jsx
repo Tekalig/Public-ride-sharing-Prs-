@@ -10,16 +10,18 @@ import {
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
+import { useContext, useState } from "react";
+import Topbar from "../../HomePage/TopbarComponent/Topbar";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../../HomePage/components/FooterComponent/Footer"; // Assuming you have a Footer component
+import Footer from "../../HomePage/FooterComponent/Footer"; // Assuming you have a Footer component
+import ActContext from "../../../context/actContext";
 
 const DriverLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const ctx = useContext(ActContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,7 +40,7 @@ const DriverLoginPage = () => {
           body: JSON.stringify({ email, password }),
         });
         const data = await response.json();
-        localStorage.setItem("token_id", data.token_id); // Store token_id in localStorage
+        ctx.setTokenId(data.token_id); // Store token_id in localStorage
         if (response.ok) {
           // Handle login success
           console.log(data);

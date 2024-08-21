@@ -12,8 +12,8 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
-import Footer from "../../HomePage/components/FooterComponent/Footer";
+import Topbar from "../../HomePage/TopbarComponent/Topbar";
+import Footer from "../../HomePage/FooterComponent/Footer";
 import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
 
 function PassangerRegisterPage() {
