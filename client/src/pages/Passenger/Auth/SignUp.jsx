@@ -66,7 +66,7 @@ function PassangerRegisterPage() {
         const data = await response.json();
         // Handle registration success
         localStorage.setItem("token_id", data.token_id);
-        navigate("/ride-request"); // Navigate to account page on success
+        navigate("/"); // Navigate to account page on success
       } catch (error) {
         setError({ server: error.message });
       }

@@ -77,7 +77,7 @@ function DriverRegisterPage() {
         const data = await response.json();
         // Handle registration success
         localStorage.setItem("token_id", data.token_id); // Store token_id in localStorage
-        navigate("/driver"); // Navigate to driver page on success
+        navigate("/"); // Navigate to driver page on success
       } catch (error) {
         setErrors({ api: error.message });
       }

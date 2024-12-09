@@ -44,7 +44,7 @@ const DriverLoginPage = () => {
         if (response.ok) {
           // Handle login success
           console.log(data);
-          navigate("/driver"); // Redirect to driver page
+          navigate("/"); // Redirect to driver page
         } else {
           // Handle login failure
           setErrors({ server: data.message });

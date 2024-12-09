@@ -8,15 +8,23 @@ import DriverLogin from "./pages/Driver/Auth/Login";
 import DriverRegister from "./pages/Driver/Auth/SignUp";
 import PassangerRegister from "./pages/Passenger/Auth/SignUp";
 import PassangerLogin from "./pages/Passenger/Auth/Login";
+import ActContext from "./context/actContext";
 import "./App.css";
 import Setting from "./pages/Account Page/Settings component/Setting";
+import { useContext } from "react";
+import Dashboard from "./pages/Dashboard/dashboard";
 
 function App() {
+  const ctx = useContext(ActContext);
   return (
     <>
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route
+            exact
+            path="/"
+            element={ctx.isLogin ? <Dashboard /> : <Home />}
+          />
           <Route path="/account" element={<Account />} />
           <Route path="/driver" element={<Driver />} />
           <Route path="/ride-request" element={<RideRequest />} />

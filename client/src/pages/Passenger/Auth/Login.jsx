@@ -51,7 +51,7 @@ const PassangerLoginPage = () => {
 
           ctx.setTokenId(data.token_id); // Store token_id in localStorage
           ctx.handleLogin();
-          navigate("/ride-request"); // Redirect to ride request page
+          navigate("/"); // Redirect to ride request page
         }
       } catch (error) {
         setErrors({ server: error.message });
