@@ -1,4 +1,4 @@
-import { newPassenger, verifyPassenger } from "../../models/passenger.model";
+import { newPassenger, verifyPassenger } from "../models/passenger_model";
 
 function passengerLogin(req, res) {
   try {
