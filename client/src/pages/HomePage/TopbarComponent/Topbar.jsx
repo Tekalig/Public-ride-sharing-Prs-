@@ -16,14 +16,14 @@ function Topbar() {
             <li className="topListItem">
               <Link to={"/"}>
                 {" "}
-                <FaHome size={20} /> <Text fontSize={10}> ዋና ገጽ </Text>
+                <FaHome size={20} /> <Text fontSize={10}> Home </Text>
               </Link>
             </li>
 
             <li className="topListItem">
               <Link to={"/about"}>
                 <FaInfoCircle size={20} />
-                <Text fontSize={10}>ስለ እኛ</Text>
+                <Text fontSize={10}> about as</Text>
               </Link>
             </li>
           </ul>
